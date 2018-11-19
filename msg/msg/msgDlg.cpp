@@ -11,8 +11,19 @@
 #define new DEBUG_NEW
 #endif
 
+HHOOK hHook;
 
-// CAboutDlg dialog used for App About
+LRESULT __stdcall CBTHookProc(long nCode, WPARAM wParam, LPARAM  lParam)
+{
+    if (nCode == HCBT_ACTIVATE)
+    {
+        SetDlgItemText((HWND)wParam, IDOK, L"确定英文");
+        SetDlgItemText((HWND)wParam, IDCANCEL, L"取消英文");
+        UnhookWindowsHookEx(hHook);
+    }
+    return 0;
+}
+
 
 class CAboutDlg : public CDialogEx
 {
@@ -210,12 +221,15 @@ LRESULT CmsgDlg::WindowProc(UINT message, WPARAM  wParam, LPARAM  lParam)
 
 void CmsgDlg::OnBnClickedButton2()
 {
-    MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US));
+    MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_ENGLISH, SUBLANG_BENGALI_INDIA));
 }
 
 
 void CmsgDlg::OnBnClickedButton1()
 {
-    MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED));
+    //hHook = SetWindowsHookEx(WH_CBT, (HOOKPROC)CBTHookProc, NULL, GetCurrentThreadId());
+    MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_FRENCH, SUBLANG_FRENCH_BELGIAN));
+
 
 }
+
