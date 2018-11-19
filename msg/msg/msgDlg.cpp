@@ -65,6 +65,8 @@ BEGIN_MESSAGE_MAP(CmsgDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
     ON_CBN_SELCHANGE(IDC_COMBO1, &CmsgDlg::OnCbnSelchangeCombo1)
+    ON_BN_CLICKED(IDC_BUTTON2, &CmsgDlg::OnBnClickedButton2)
+    ON_BN_CLICKED(IDC_BUTTON1, &CmsgDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -203,5 +205,17 @@ LRESULT CmsgDlg::WindowProc(UINT message, WPARAM  wParam, LPARAM  lParam)
      }
    
     return CDialogEx::WindowProc(message, wParam, lParam);
+
+}
+
+void CmsgDlg::OnBnClickedButton2()
+{
+    MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US));
+}
+
+
+void CmsgDlg::OnBnClickedButton1()
+{
+    MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED));
 
 }
