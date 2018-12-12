@@ -1,4 +1,4 @@
-
+ï»¿
 // msgDlg.cpp : implementation file
 //
 
@@ -17,8 +17,8 @@ LRESULT __stdcall CBTHookProc(long nCode, WPARAM wParam, LPARAM  lParam)
 {
     if (nCode == HCBT_ACTIVATE)
     {
-        SetDlgItemText((HWND)wParam, IDOK, L"È·¶¨Ó¢ÎÄ");
-        SetDlgItemText((HWND)wParam, IDCANCEL, L"È¡ÏûÓ¢ÎÄ");
+        SetDlgItemText((HWND)wParam, IDOK, L"ç¡®å®šè‹±æ–‡");
+        SetDlgItemText((HWND)wParam, IDCANCEL, L"å–æ¶ˆè‹±æ–‡");
         UnhookWindowsHookEx(hHook);
     }
     return 0;
@@ -244,33 +244,33 @@ BOOL CmsgDlg::CopyDirectory(CString strSrcPath,CString strDestPath)
      CFileFind m_sFileFind;
      if (strSrcPath.IsEmpty())
      {
-         OutputDebugString(_T("Ô´ÎÄ¼şÃûÎª¿Õ£¬ÎŞ·¨½øĞĞ¿½±´!"));
+         OutputDebugString(_T("æºæ–‡ä»¶åä¸ºç©ºï¼Œæ— æ³•è¿›è¡Œæ‹·è´!"));
          return FALSE;
      }
      if (!m_sFileFind.FindFile(strDestPath))
      {
-         CreateDirectory(strDestPath,NULL);//´´½¨Ä¿±êÎÄ¼ş¼Ğ
+         CreateDirectory(strDestPath, NULL);//åˆ›å»ºç›®æ ‡æ–‡ä»¶å¤¹
      }
      CFileFind finder;
      CString path;
-     path.Format(_T("%s/*.*"),strSrcPath);
+     path.Format(_T("%s/*.*"), strSrcPath);
      //AfxMessageBox(path);
      BOOL bWorking = finder.FindFile(path);
      while (bWorking)
      {
          bWorking = finder.FindNextFile();
          //AfxMessageBox(finder.GetFileName());
-         if (finder.IsDirectory() && !finder.IsDots())//ÊÇÎÄ¼ş¼Ğ ¶øÇÒ Ãû³Æ²»º¬ . »ò ..  
+         if (finder.IsDirectory() && !finder.IsDots())//æ˜¯æ–‡ä»¶å¤¹ è€Œä¸” åç§°ä¸å« . æˆ– ..  
          {
-             CopyDirectory(finder.GetFilePath(),strDestPath+"/"+finder.GetFileName());//µİ¹é´´½¨ÎÄ¼ş¼Ğ+"/"+finder.GetFileName()  
+             CopyDirectory(finder.GetFilePath(), strDestPath + "/" + finder.GetFileName());//é€’å½’åˆ›å»ºæ–‡ä»¶å¤¹+"/"+finder.GetFileName()  
          }
          else
-         {//ÊÇÎÄ¼ş£¬ÔòÖ±½Ó¸´ÖÆ
-             //AfxMessageBox("¸´ÖÆÎÄ¼ş"+finder.GetFilePath());//+finder.GetFileName()  
-             CopyFile(finder.GetFilePath(),strDestPath+"/"+finder.GetFileName(),FALSE);
+         {//æ˜¯æ–‡ä»¶ï¼Œåˆ™ç›´æ¥å¤åˆ¶
+          //AfxMessageBox("å¤åˆ¶æ–‡ä»¶"+finder.GetFilePath());//+finder.GetFileName()  
+             CopyFile(finder.GetFilePath(), strDestPath + "/" + finder.GetFileName(), FALSE);
          }
      }
- 
+
      return TRUE;
  }
  
