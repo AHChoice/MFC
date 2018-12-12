@@ -229,7 +229,50 @@ void CmsgDlg::OnBnClickedButton1()
 {
     //hHook = SetWindowsHookEx(WH_CBT, (HOOKPROC)CBTHookProc, NULL, GetCurrentThreadId());
     MessageBoxEx(NULL, L"This is an English MessageBox!", L"Alert", MB_OKCANCEL, MAKELANGID(LANG_FRENCH, SUBLANG_FRENCH_BELGIAN));
+    CString src_path = _T("D:/Git/MFC/Dump");
+    CString dest_path = _T("D:/Git/MFC/msg");
+    
+    //CopyDirectory(src_path, dest_path);
 
+    SHFILEOPSTRUCT   sfo;
 
+ 
 }
+
+BOOL CmsgDlg::CopyDirectory(CString strSrcPath,CString strDestPath)
+ {
+     CFileFind m_sFileFind;
+     if (strSrcPath.IsEmpty())
+     {
+         OutputDebugString(_T("源文件名为空，无法进行拷贝!"));
+         return FALSE;
+     }
+     if (!m_sFileFind.FindFile(strDestPath))
+     {
+         CreateDirectory(strDestPath,NULL);//创建目标文件夹
+     }
+     CFileFind finder;
+     CString path;
+     path.Format(_T("%s/*.*"),strSrcPath);
+     //AfxMessageBox(path);
+     BOOL bWorking = finder.FindFile(path);
+     while (bWorking)
+     {
+         bWorking = finder.FindNextFile();
+         //AfxMessageBox(finder.GetFileName());
+         if (finder.IsDirectory() && !finder.IsDots())//是文件夹 而且 名称不含 . 或 ..  
+         {
+             CopyDirectory(finder.GetFilePath(),strDestPath+"/"+finder.GetFileName());//递归创建文件夹+"/"+finder.GetFileName()  
+         }
+         else
+         {//是文件，则直接复制
+             //AfxMessageBox("复制文件"+finder.GetFilePath());//+finder.GetFileName()  
+             CopyFile(finder.GetFilePath(),strDestPath+"/"+finder.GetFileName(),FALSE);
+         }
+     }
+ 
+     return TRUE;
+ }
+ 
+
 
